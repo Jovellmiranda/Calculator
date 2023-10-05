@@ -1,59 +1,93 @@
-// File Path:
+import React, { useState } from 'react';
 import './App.css';
 
-function CalcuButton({ label }) {
+function CalcuButton({ label, onClick, buttonClassName = "CalcuButton" }) {
   return (
-    <button className="CalcuButton">
+    <button className={buttonClassName} onClick={onClick}>
       {label}
-    </button>
-  );
-}
-
-function NameButton({ label }) {
-  return (
-    <button className="NameButton">
-     {label}
     </button>
   );
 }
 
 function CalcuDisplay({ Display }) {
   return (
-    <div className='CalcuDisplay'>
+    <div className="CalcuDisplay">
       {Display}
     </div>
   );
 }
 
-function App() {
+export default function App() {
+  const [Display, setDisp] = useState("0");
+  const [expression, setExpression] = useState("");
+  const [resetDisplay, setResetDisplay] = useState(false);
+
+  const handleButtonClick = (value) => {
+    if (resetDisplay) {
+      setExpression("");
+      setResetDisplay(false);
+    }
+
+    setExpression((prevExpression) => prevExpression + value);
+    setDisp((prevDisplay) => (prevDisplay === "0" ? value : prevDisplay + value));
+  };
+ // Function to handle the clear button click
+ 
+  const clearClickHandler = (e) => {
+    e.preventDefault();
+    setDisp("0");
+    setExpression("");
+    setResetDisplay(false);
+  };
+ // Function to handle the equal button click
+  const equalClickHandler = (e) => {
+    e.preventDefault();
+
+    try {
+      // eslint-disable-next-line no-eval
+      const result = eval(expression);
+      setDisp(result.toString());
+      setExpression(result.toString());
+      setResetDisplay(true);
+    } catch (error) {
+      setDisp("ERROR");
+      setExpression("");
+      setResetDisplay(false);
+    }
+  };
+ // Function to handle the display to "Miranda"
+  const nameClickHandler = (e) => {
+    e.preventDefault();
+    setDisp("Miranda");
+  };
+
   return (
-    <div className='CalcContainer'>
-      <CalcuDisplay Display={'0'} />
-      <div className='ButtonContainer'>
-        <CalcuButton label={7} />
-        <CalcuButton label={8} />
-        <CalcuButton label={9} />
-        <CalcuButton label={"+"} />
-        <CalcuButton label={4} />
-        <CalcuButton label={5} />
-        <CalcuButton label={6} />
-        <CalcuButton label={"-"} />
-        <CalcuButton label={1} />
-        <CalcuButton label={2} />
-        <CalcuButton label={3} />
-        <CalcuButton label={"*"} />
-        <CalcuButton label={"C"} />
-        <CalcuButton label={0} />
-        <CalcuButton label={"="} />
-        <CalcuButton label={"÷"} />
-      </div>
-      <div className="NameButton">
-        <NameButton label={"Miranda"} />
+    <div className="App">
+      <div className="CalcContainer">
+        <h1>Calculator of Jovell Christian Q. Miranda - IT3A</h1>
+        <CalcuDisplay Display={Display} />
+        <div className="ButtonContainer">
+          <CalcuButton label={7} onClick={() => handleButtonClick("7")} buttonClassName={"CalcuButtonNum"} />
+          <CalcuButton label={8} onClick={() => handleButtonClick("8")} buttonClassName={"CalcuButtonNum"} />
+          <CalcuButton label={9} onClick={() => handleButtonClick("9")} buttonClassName={"CalcuButtonNum"} />
+          <CalcuButton label={"+"} onClick={() => handleButtonClick("+")} buttonClassName={"OperatorButton"} />
+          <CalcuButton label={4} onClick={() => handleButtonClick("4")} buttonClassName={"CalcuButtonNum"} />
+          <CalcuButton label={5} onClick={() => handleButtonClick("5")} buttonClassName={"CalcuButtonNum"} />
+          <CalcuButton label={6} onClick={() => handleButtonClick("6")} buttonClassName={"CalcuButtonNum"} />
+          <CalcuButton label={"-"} onClick={() => handleButtonClick("-")} buttonClassName={"OperatorButton"} />
+          <CalcuButton label={1} onClick={() => handleButtonClick("1")} buttonClassName={"CalcuButtonNum"} />
+          <CalcuButton label={2} onClick={() => handleButtonClick("2")} buttonClassName={"CalcuButtonNum"} />
+          <CalcuButton label={3} onClick={() => handleButtonClick("3")} buttonClassName={"CalcuButtonNum"} />
+          <CalcuButton label={"*"} onClick={() => handleButtonClick("*")} buttonClassName={"OperatorButton"} />
+          <CalcuButton label={"C"} onClick={clearClickHandler} buttonClassName={"OperatorButton"} />
+          <CalcuButton label={"0"} onClick={() => handleButtonClick("0")} buttonClassName={"CalcuButtonNum"} />
+          <CalcuButton label={"="} onClick={equalClickHandler} buttonClassName={"EqualsButton"} />
+          <CalcuButton label={"/"} onClick={() => handleButtonClick("/")} buttonClassName={"OperatorButton"} />
+        </div>
+        <div className="NameButton">
+          <CalcuButton label={"Miranda"} onClick={nameClickHandler} buttonClassName={"CalcuButtonName"} />
+        </div>
       </div>
     </div>
   );
 }
-
-
-// Running the Code:
-export default App;
