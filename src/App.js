@@ -32,7 +32,6 @@ export default function App() {
     setDisp((prevDisplay) => (prevDisplay === "0" ? value : prevDisplay + value));
   };
  // Function to handle the clear button click
- 
   const clearClickHandler = (e) => {
     e.preventDefault();
     setDisp("0");
@@ -58,7 +57,7 @@ export default function App() {
  // Function to handle the display to "Miranda"
   const nameClickHandler = (e) => {
     e.preventDefault();
-    setDisp("Miranda");
+    setDisp("Jovell Chrsitian Q. Miranda"); // Updated to Full Name
   };
 
   return (
