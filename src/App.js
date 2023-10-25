@@ -70,6 +70,7 @@ export default function App() {
       });
     }
   };
+  
   const percentClickHandler = () => {
     if (Display !== "0") {
       const value = (parseFloat(Display) / 100).toString();
@@ -101,8 +102,8 @@ export default function App() {
           <CalcuButton label={"0"} onClick={() => handleButtonClick("0")} buttonClassName={"CalcuButtonNum"} />
           <CalcuButton label={"="} onClick={equalClickHandler} buttonClassName={"EqualsButton"} />
           <CalcuButton label={"/"} onClick={() => handleButtonClick("/")} buttonClassName={"OperatorButton"} />
-          <CalcuButton label={"+/-"} onClick={() => handleSignChange("+/-")} buttonClassName={"NegativePositive"} />
-          <CalcuButton label="%" onClick={percentClickHandler} buttonClassName={"PercentButton"} />
+          <CalcuButton label={"+/-"} onClick={() => handleSignChange("+/-")} buttonClassName={"OperatorButton"} />
+          <CalcuButton label="%" onClick={() => percentClickHandler("%")} buttonClassName={"OperatorButton"} />
 
         </div>
         <div className="NameButton">
