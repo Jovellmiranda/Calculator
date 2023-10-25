@@ -59,6 +59,25 @@ export default function App() {
     e.preventDefault();
     setDisp("Jovell Chrsitian Q. Miranda"); // Updated to Full Name
   };
+  const handleSignChange = () => {
+    if (Display !== "0") {
+      setDisp(prevDisplay => {
+        if (prevDisplay[0] === "-") {
+          return prevDisplay.slice(1);
+        } else {
+          return `-${prevDisplay}`;
+        }
+      });
+    }
+  };
+  const percentClickHandler = () => {
+    if (Display !== "0") {
+      const value = (parseFloat(Display) / 100).toString();
+      setDisp(value);
+    }
+  };
+  
+  
 
   return (
     <div className="App">
@@ -82,6 +101,9 @@ export default function App() {
           <CalcuButton label={"0"} onClick={() => handleButtonClick("0")} buttonClassName={"CalcuButtonNum"} />
           <CalcuButton label={"="} onClick={equalClickHandler} buttonClassName={"EqualsButton"} />
           <CalcuButton label={"/"} onClick={() => handleButtonClick("/")} buttonClassName={"OperatorButton"} />
+          <CalcuButton label={"+/-"} onClick={() => handleSignChange("+/-")} buttonClassName={"NegativePositive"} />
+          <CalcuButton label="%" onClick={percentClickHandler} buttonClassName={"PercentButton"} />
+
         </div>
         <div className="NameButton">
           <CalcuButton label={"Miranda"} onClick={nameClickHandler} buttonClassName={"CalcuButtonName"} />
